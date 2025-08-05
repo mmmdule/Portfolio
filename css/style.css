@@ -32,6 +32,7 @@ i {
 .card {
     transition: 0.6s;
     overflow: hidden;
+    min-height: fit-content;
 }
 
 .card:hover {
