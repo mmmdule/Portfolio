@@ -1,6 +1,10 @@
+:root{
+    --myPurple: #d814e2;
+}
+
 .st0 {
     fill: none;
-    stroke: #00ff00;
+    stroke: var(--myPurple);
     stroke-width: 1;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -9,7 +13,7 @@
 
 .st1 {
     fill: none;
-    stroke: #00ff00;
+    stroke: var(--myPurple);
     stroke-width: 1;
     stroke-linejoin: round;
     stroke-miterlimit: 10;
@@ -17,7 +21,7 @@
 
 .st2 {
     fill: none;
-    stroke: #00ff00;
+    stroke: var(--myPurple);
     stroke-width: 1;
     stroke-linecap: round;
     stroke-miterlimit: 10;

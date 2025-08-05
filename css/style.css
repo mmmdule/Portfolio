@@ -10,9 +10,15 @@
     }
 }
 
-*, .btn-outline-success {
+*, .btn-outline-success, .border-success {
+    --myPurple: #d814e2;
     background-color: black !important;
-    color: lime;
+    border-color: var(--myPurple);
+    color: var(--myPurple);
+}
+
+.btn-outline-success, .border-success {
+    border-color: var(--myPurple) !important;
 }
 
 svg{
