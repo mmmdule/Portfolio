@@ -1,0 +1,55 @@
+@media screen and (min-width: 768px) {
+    .container-fluid {
+        width: 85% !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container-fluid {
+        width: 100% !important;
+    }
+}
+
+*, .btn-outline-success {
+    background-color: black !important;
+    color: lime;
+}
+
+svg{
+    vertical-align: bottom;
+    margin-right: 0.5rem;
+}
+
+i {
+    transition: 0.4s;
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+.card {
+    transition: 0.6s;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: 0.6s;
+}
+
+.card-img-top, video {
+    position: relative;
+    width: calc(100% + 40px);
+    margin: -1rem;
+}
+
+.card-footer {
+    border: none;
+    background-color: transparent;
+    padding: 1rem 1rem;
+}
+
+.border-indigo {
+   border-color: #6610f2 !important;
+}
