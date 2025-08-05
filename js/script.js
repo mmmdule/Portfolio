@@ -1,5 +1,5 @@
 
-document.addEventListener('DOMContentLoaded', function() {
+window.onload = function() {
     // change bi-circle to bi-circle-fill on hover
     toggleCircleIcons();
 
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // make all cards equal height
     makeCardsEqualHeight();
-});
+};
 
 function toggleCircleIcons() {
     const icons = document.querySelectorAll('.bi-circle');
