@@ -8,6 +8,9 @@ window.onload = function() {
 
     // make all cards equal height
     makeCardsEqualHeight();
+
+    // add border-success class on hover
+    cardBorderOnHover();
 };
 
 function toggleCircleIcons() {
@@ -57,5 +60,29 @@ function makeCardsEqualHeight() {
     // Set all cards to the maximum height
     cards.forEach(card => {
         card.style.height = maxHeight + 'px';
+    });
+}
+
+function cardBorderOnHover() {
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+        card.addEventListener('mouseover', function() {
+            this.classList.add('border-success');
+            // add to card-header as well
+            const header = this.querySelector('.card-header');
+            if (header) {
+                header.classList.add('border-success');
+            }
+        });
+
+        card.addEventListener('mouseout', function() {
+            this.classList.remove('border-success');
+            // remove from card-header as well
+            const header = this.querySelector('.card-header');
+            if (header) {
+                header.classList.remove('border-success');
+            }
+        });
     });
 }

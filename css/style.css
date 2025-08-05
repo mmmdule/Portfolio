@@ -26,6 +26,7 @@ i {
 
 .card-header {
     font-weight: bold;
+    transition: 0.6s;
 }
 
 .card {
