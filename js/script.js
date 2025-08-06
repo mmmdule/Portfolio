@@ -51,7 +51,7 @@ function makeCardsEqualHeight() {
 
     // Reset heights
     cards.forEach(card => {
-        card.style.height = 'auto';
+        card.style.height = 'fit-content'; // Reset to auto height
     });
 
     // Find the maximum height
@@ -183,6 +183,7 @@ function setupTerminalNavigation() {
 
 window.addEventListener('resize', () => {
     ShowTerminalOrMobileNav();
+    makeCardsEqualHeight(); // Recalculate card heights on resize
 });
 
 function ShowTerminalOrMobileNav() {
