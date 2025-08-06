@@ -170,6 +170,8 @@ function setupTerminalNavigation() {
 
     mobileMenuItems.forEach(item => {
         item.addEventListener('click', (event) => {
+            terminalActive = !terminalActive; // Toggle terminal active state
+
             event.preventDefault();
             const targetId = item.getAttribute('href').substring(1);
             const targetElement = document.getElementById(targetId);
