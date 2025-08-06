@@ -1,4 +1,3 @@
-
 window.onload = function() {
     // change bi-circle to bi-circle-fill on hover
     toggleCircleIcons();
@@ -11,7 +10,12 @@ window.onload = function() {
 
     // add border-success class on hover
     cardBorderOnHover();
+
+    // New terminal navigation setup
+    setupTerminalNavigation();
 };
+
+let terminalActive = true;
 
 function toggleCircleIcons() {
     const icons = document.querySelectorAll('.bi-circle');
@@ -85,4 +89,118 @@ function cardBorderOnHover() {
             }
         });
     });
+}
+
+function setupTerminalNavigation() {
+    const terminalOverlay = document.getElementById('terminal-overlay');
+    const terminalInput = document.querySelector('.terminal-input');
+    const terminalButton = document.getElementById('terminal-btn');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileMenuButton = document.getElementById('mobile-menu-btn');
+    const mobileMenuItems = document.querySelectorAll('.mobile-menu-content .menu-item');
+
+    const terminalText = document.querySelector('.terminal-text');
+
+    // Show the terminal on page load if on a desktop device
+    if (window.innerWidth > 768) {
+        terminalOverlay.style.display = 'flex';
+        mobileMenuOverlay.style.display = 'none';
+    }
+    else {
+        terminalOverlay.style.display = 'none'; // Hide terminal on mobile by default
+        terminalButton.style.display = 'none'; // Show terminal button on mobile
+        mobileMenuOverlay.style.display = 'flex'; // Show mobile menu overlay
+    }
+
+    // Toggle terminal on button click
+    if (terminalButton) {
+        terminalButton.addEventListener('click', () => {
+            terminalActive = !terminalActive; // Toggle terminal active state
+            if (terminalOverlay.style.display === 'none' || terminalOverlay.style.display === '') {
+                terminalOverlay.style.display = 'flex';
+                terminalInput.focus();
+            } else {
+                terminalOverlay.style.display = 'none';
+            }
+        });
+    }
+
+    // Handle terminal input
+    if (terminalInput) {
+        terminalInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                const command = terminalInput.value.trim().toLowerCase();
+                //TODO: if command is in ['projects', 'about', 'experience', 'publications'], get by id and scroll to it
+                //      (do this to avoid writing 50 if-else statements)
+                if (['projects'].indexOf(command) !== -1) {
+                    terminalOverlay.style.display = 'none';
+                    const projectsSection = document.getElementById(command);
+                    if (projectsSection) {
+                        projectsSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+                else if (command === 'help'){
+                    terminalText.textContent += 
+`\nAvailable commands:\nPROJECTS\tView my personal Github projects.\nCLS\t\tClears the screen.`;
+                }
+                else if (command === 'cls' || command === 'clear'){
+                    terminalText.textContent = `Welcome to my portfolio terminal!\nTo view available commands, use the "help" command.\n\n`
+                }
+                else
+                    terminalText.textContent += 
+`\nCommand not recoginized. Use "help" to view available commands.\n`
+                // Clear input after command
+                terminalInput.value = '';
+            }
+        });
+    }
+
+    // Mobile menu logic
+
+    if (mobileMenuButton) {
+        mobileMenuButton.addEventListener('click', () => {
+            terminalActive = !terminalActive; // Toggle terminal active state
+            if (mobileMenuOverlay.style.display === 'none' || mobileMenuOverlay.style.display === '') {
+                mobileMenuOverlay.style.display = 'flex';
+            } else {
+                mobileMenuOverlay.style.display = 'none';
+            }
+        });
+    }
+
+    mobileMenuItems.forEach(item => {
+        item.addEventListener('click', (event) => {
+            event.preventDefault();
+            const targetId = item.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+            mobileMenuOverlay.style.display = 'none';
+        });
+    });
+}
+
+window.addEventListener('resize', () => {
+    ShowTerminalOrMobileNav();
+});
+
+function ShowTerminalOrMobileNav() {
+    const terminalOverlay = document.getElementById('terminal-overlay');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const terminalButton = document.getElementById('terminal-btn');
+
+    if (window.innerWidth > 768) {
+        terminalButton.style.display = 'block'; // Hide terminal button on desktop
+        if (terminalActive) {
+            terminalOverlay.style.display = 'flex';
+        }
+        mobileMenuOverlay.style.display = 'none';
+    } else {
+        terminalOverlay.style.display = 'none'; // Hide terminal on mobile
+        terminalButton.style.display = 'none'; // Hide terminal button on mobile
+        if (terminalActive) {
+            mobileMenuOverlay.style.display = 'flex';
+        }
+    }
 }
