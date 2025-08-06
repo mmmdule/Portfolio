@@ -192,11 +192,13 @@ function ShowTerminalOrMobileNav() {
     const terminalOverlay = document.getElementById('terminal-overlay');
     const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
     const terminalButton = document.getElementById('terminal-btn');
+    const terminalInput = document.querySelector('.terminal-input');
 
     if (window.innerWidth > 768) {
         terminalButton.style.display = 'block'; // Hide terminal button on desktop
         if (terminalActive) {
             terminalOverlay.style.display = 'flex';
+            terminalInput.focus();
         }
         mobileMenuOverlay.style.display = 'none';
     } else {
