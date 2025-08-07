@@ -10,7 +10,7 @@
     }
 }
 
-*, .btn-outline-success, .border-success {
+*:not(.job-icon), .btn-outline-success, .border-success {
     --myPurple: #d814e2;
     background-color: black !important;
     border-color: var(--myPurple);
@@ -144,41 +144,75 @@ i {
     width: 80%;
     max-width: 400px;
     padding: 20px;
-    border: 2px solid var(--myPurple);
-    box-shadow: 0 0 10px var(--myPurple);
     background-color: #000;
     text-align: center;
+}
+
+.mobile-menu-content .menu-item span {
+    color: black;
+    background-color: inherit !important;
+    transition: inherit;
 }
 
 .mobile-menu-content .menu-item {
     font-size: 1.5rem;
     color: var(--myPurple);
     text-decoration: none;
-    display: block;
+    display: inline-block;
+    width: 100%;
     padding: 10px;
     transition: background-color 0.3s;
+
+    border: 2px solid var(--myPurple);
+    box-shadow: 0 0 10px var(--myPurple);
 }
 
 .mobile-menu-content .menu-item:hover {
-    background-color: rgba(216, 20, 226, 0.2);
+    background-color: var(--myPurple) !important;
+    color: black;
+    transition: background-color 0.3s;
+
+    border: 2px solid rgb(219, 17, 229);
+    box-shadow: 0 0 10px var(--myPurple);
+}
+
+.mobile-menu-content .menu-item:hover span {
+    color: black;
+}
+
+.job-icon {
+    border: 1px solid transparent;
 }
 
 .job-icon * {
     background-color: transparent !important;
     line-height: normal;
     padding: auto 0.4em;
+    cursor: pointer;
 }
 
 .job-icon svg{
     padding: 0.4em;
-    cursor: pointer;
 }
 
 :nth-child(1 of .job-icon) svg { /* Move the first icon slightly to the right */
     transform: translate(0.2em, 0) !important;
 }
 
+:nth-child(2 of .job-icon) svg { /* Move the second icon slightly to the right */
+    transform: translate(0.25em, 0) !important;
+}
+
+:nth-child(3 of .job-icon) svg { /* Move the second icon slightly to the right */
+    transform: translate(0.5em, 0) !important;
+}
+
+.job-icon:hover {
+    background-color: #b112b92a;
+    border: 1px solid #b112b989 !important;
+}
+
 .job-icon-clicked {
     background-color: #b112b958 !important;
-    border: 1px solid #b112b9cd;
+    border: 1px solid #b112b9cd !important;
 }

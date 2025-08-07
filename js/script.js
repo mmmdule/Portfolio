@@ -21,7 +21,7 @@ window.onload = function() {
 
 // Globals
 let terminalActive = true;
-const commandList = ['projects', 'cls', 'clear', 'help']; // maybe separate into different categories
+const commandList = ['cls', 'clear', 'experience', 'help', 'projects']; // maybe separate into different categories
 const commandHistory = [];
 let historyIndex = -1;
 
@@ -154,7 +154,7 @@ function setupTerminalNavigation() {
 
                 //TODO: if command is in ['projects', 'about', 'experience', 'publications'], get by id and scroll to it
                 //      (do this to avoid writing 50 if-else statements)
-                if (['projects'].indexOf(command) !== -1) { // add other sections to the ['projects'] array here
+                if (['projects', 'experience'].indexOf(command) !== -1) { // add other sections to the ['projects'] array here
                     terminalOverlay.style.display = 'none';
                     const projectsSection = document.getElementById(command);
                     if (projectsSection) {
@@ -163,7 +163,7 @@ function setupTerminalNavigation() {
                 }
                 else if (command === 'help'){
                     terminalText.textContent += 
-`\nAvailable commands:\nPROJECTS\tView my personal Github projects.\nCLS\t\tClears the screen.`;
+`\nAvailable commands:\nPROJECTS\tView my personal Github projects.\nEXPERIENCE\tCheck out my previous job experience.\nCLS\t\tClears the screen.`;
                 }
                 else if (command === 'cls' || command === 'clear'){
                     terminalText.textContent = `Welcome to my portfolio terminal!\nTo view available commands, use the "help" command.\n\n`
@@ -275,10 +275,9 @@ function ShowTerminalOrMobileNav() {
 
 function setupPreviousExperienceIcons(){
     const jobIcons = document.querySelectorAll(".job-icon");
-    console.log(jobIcons)
+    
     jobIcons.forEach(icon => {
         icon.addEventListener('click', function(event) {
-            console.log("Clicked!");
             jobIcons.forEach(i => i.classList.remove("job-icon-clicked"))
             icon.classList.toggle("job-icon-clicked");
             event.stopPropagation(); //otherwise document 'click' listener will be run and no icon will appear selected
