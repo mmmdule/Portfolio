@@ -13,6 +13,9 @@ window.onload = function() {
 
     // New terminal navigation setup
     setupTerminalNavigation();
+
+    // Previous experience icon setup
+    setupPreviousExperienceIcons();
 };
 
 
@@ -268,3 +271,27 @@ function ShowTerminalOrMobileNav() {
         }
     }
 }
+
+
+function setupPreviousExperienceIcons(){
+    const jobIcons = document.querySelectorAll(".job-icon");
+    console.log(jobIcons)
+    jobIcons.forEach(icon => {
+        icon.addEventListener('click', function(event) {
+            console.log("Clicked!");
+            jobIcons.forEach(i => i.classList.remove("job-icon-clicked"))
+            icon.classList.toggle("job-icon-clicked");
+            event.stopPropagation(); //otherwise document 'click' listener will be run and no icon will appear selected
+        });
+
+        icon.addEventListener("dblclick", function(event) {
+            alert("Icon double clicked");
+        });
+    });
+}
+
+document.addEventListener('click', function(event) {
+    const clickedIcon = document.querySelector(".job-icon-clicked");
+    if (clickedIcon)
+        clickedIcon.classList.remove("job-icon-clicked");
+})

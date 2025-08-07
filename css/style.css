@@ -162,3 +162,23 @@ i {
 .mobile-menu-content .menu-item:hover {
     background-color: rgba(216, 20, 226, 0.2);
 }
+
+.job-icon * {
+    background-color: transparent !important;
+    line-height: normal;
+    padding: auto 0.4em;
+}
+
+.job-icon svg{
+    padding: 0.4em;
+    cursor: pointer;
+}
+
+:nth-child(1 of .job-icon) svg { /* Move the first icon slightly to the right */
+    transform: translate(0.2em, 0) !important;
+}
+
+.job-icon-clicked {
+    background-color: #b112b958 !important;
+    border: 1px solid #b112b9cd;
+}
