@@ -15,7 +15,12 @@ window.onload = function() {
     setupTerminalNavigation();
 };
 
+
+// Globals
 let terminalActive = true;
+const commandList = ['projects', 'cls', 'clear', 'help']; // maybe separate into different categories
+const commandHistory = [];
+let historyIndex = -1;
 
 function toggleCircleIcons() {
     const icons = document.querySelectorAll('.bi-circle');
@@ -100,6 +105,9 @@ function setupTerminalNavigation() {
     const mobileMenuItems = document.querySelectorAll('.mobile-menu-content .menu-item');
 
     const terminalText = document.querySelector('.terminal-text');
+    let tabCompletionIndex = 0;
+    let originalInputValue = '';
+    let matchingCommands = [];
 
     // Show the terminal on page load if on a desktop device
     if (window.innerWidth > 768) {
@@ -127,12 +135,23 @@ function setupTerminalNavigation() {
 
     // Handle terminal input
     if (terminalInput) {
+        terminalInput.addEventListener('blur', (event) => {
+            if (terminalActive)
+                terminalInput.focus();
+        })
+
         terminalInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 const command = terminalInput.value.trim().toLowerCase();
+
+                if (command !== '') {
+                    commandHistory.push(command);
+                    historyIndex = commandHistory.length; // Set index to the end of the history
+                }
+
                 //TODO: if command is in ['projects', 'about', 'experience', 'publications'], get by id and scroll to it
                 //      (do this to avoid writing 50 if-else statements)
-                if (['projects'].indexOf(command) !== -1) {
+                if (['projects'].indexOf(command) !== -1) { // add other sections to the ['projects'] array here
                     terminalOverlay.style.display = 'none';
                     const projectsSection = document.getElementById(command);
                     if (projectsSection) {
@@ -149,10 +168,50 @@ function setupTerminalNavigation() {
                 else
                     terminalText.textContent += 
 `\nCommand not recoginized. Use "help" to view available commands.\n`
+
                 // Clear input after command
                 terminalInput.value = '';
+                // Reset tab completion state on Enter
+                tabCompletionIndex = 0;
+                originalInputValue = '';
+                matchingCommands = [];
+            }
+            else if (event.key === 'Tab') {
+                event.preventDefault(); // Prevent default tab behavior
+
+                if (originalInputValue === '') {
+                    originalInputValue = terminalInput.value.trim().toLowerCase();
+                    return;
+                }
+
+                matchingCommands = commandList.filter(command => command.startsWith(originalInputValue));
+                matchingCommands.push(originalInputValue);
+                if (matchingCommands.length > 0) {
+                    terminalInput.value = matchingCommands[tabCompletionIndex];
+                    tabCompletionIndex = (tabCompletionIndex + 1) % matchingCommands.length;
+                } else {
+                    terminalInput.value = originalInputValue; // Revert to original input if no matches
+                    tabCompletionIndex = 0;
+                }
+            } else if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                if (commandHistory.length > 0) {
+                    historyIndex = Math.max(0, historyIndex - 1);
+                    terminalInput.value = commandHistory[historyIndex];
+                }
+            } else if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                if (commandHistory.length > 0) {
+                    historyIndex = Math.min(commandHistory.length - 1, historyIndex + 1);
+                    terminalInput.value = commandHistory[historyIndex];
+                }
             }
         });
+
+        terminalInput.addEventListener('input', (event) => {
+            originalInputValue = terminalInput.value.trim().toLowerCase();
+            tabCompletionIndex = 0;
+        })
     }
 
     // Mobile menu logic
